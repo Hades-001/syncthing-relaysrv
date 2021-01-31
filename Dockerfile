@@ -20,7 +20,7 @@ ENV PUID=1000 PGID=1000 HOME=/var/strelaysrv
 
 COPY docker-entrypoint.sh /bin/entrypoint.sh
 RUN chmod a+x /bin/entrypoint.sh
-ENTRYPOINT ["/bin/entrypoint.sh", "/bin/strelaysrv"]
+ENTRYPOINT ["/bin/entrypoint.sh"]
 
 EXPOSE 22067 22070
-CMD [""]
+CMD /bin/strelaysrv -pools="" -protocol=tcp

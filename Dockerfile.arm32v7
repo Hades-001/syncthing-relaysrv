@@ -20,15 +20,15 @@ ENV POOLS           ""
 
 ARG STRELAYSRV_VER=v1.15.0
 ARG PLATFORM=arm
-ARG STRELAYSRV_URL=https://github.com/syncthing/relaysrv/releases/download/$STRELAYSRV_VER/strelaysrv-linux-${PLATFORM}-${STRELAYSRV_VER}.tar.gz
+ARG STRELAYSRV_URL=https://github.com/syncthing/relaysrv/releases/download/${STRELAYSRV_VER}/strelaysrv-linux-${PLATFORM}-${STRELAYSRV_VER}.tar.gz
 
 RUN set -ex && \
     apk add --no-cache ca-certificates su-exec tar wget && \
     mkdir -p /var/strelaysrv && \
     cd /tmp && \
-    wget $STRELAYSRV_URL && \
+    wget ${STRELAYSRV_URL} && \
     tar xzvf strelaysrv-linux-${PLATFORM}-${STRELAYSRV_VER}.tar.gz && \
-    mv strelaysrv-linux-${PLATFORM}-${STRELAYSRV_VER}/strelaysrv /bin/strelaysrv && \
+    mv strelaysrv-linux-${PLATFORM}-${STRELAYSRV_VER}/strelaysrv /usr/bin/strelaysrv && \
     rm -rf /tmp/*
 
 VOLUME ["/var/strelaysrv"]
@@ -43,7 +43,7 @@ ENTRYPOINT ["/bin/entrypoint.sh"]
 
 EXPOSE ${STATUS_PORT} ${SERVER_PORT}
 
-CMD /bin/strelaysrv \
+CMD /usr/bin/strelaysrv \
     -debug="${DEBUG}" \
     -listen=":${SERVER_PORT}" \
     -status-srv=":${STATUS_PORT}" \

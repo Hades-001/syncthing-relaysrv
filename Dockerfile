@@ -24,11 +24,15 @@ ENV RATE_SESSION    0
 ENV PROTOCOL        tcp
 ENV POOLS           ""
 
-RUN apk add --no-cache ca-certificates su-exec
+RUN apk add --no-cache ca-certificates su-exec tzdata
 
 VOLUME ["/var/strelaysrv"]
 
 WORKDIR /var/strelaysrv
+
+ENV TZ=Asia/Shanghai
+RUN cp /usr/share/zoneinfo/${TZ} /etc/localtime && \
+	echo "${TZ}" > /etc/timezone
 
 ENV PUID=1000 PGID=1000 HOME=/var/strelaysrv
 

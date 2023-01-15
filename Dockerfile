@@ -1,4 +1,4 @@
-FROM --platform=${TARGETPLATFORM} golang:alpine as builder
+FROM --platform=${TARGETPLATFORM} golang:1.19-alpine as builder
 ENV CGO_ENABLED=0
 ARG TAG
 
@@ -13,7 +13,7 @@ RUN set -ex && \
     rm -f strelaysrv && \
     go run build.go -no-upgrade build strelaysrv
 
-FROM --platform=${TARGETPLATFORM} alpine:3.14.0
+FROM --platform=${TARGETPLATFORM} alpine:3.17
 COPY --from=builder /root/syncthing/strelaysrv /bin/strelaysrv
 
 ENV DEBUG           false
